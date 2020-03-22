@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h2>Create Script</h2>
+  <form [formGroup]="form" (submit)="onSaveScript()"  *ngIf="!isLoading">
+    <mat-form-field>
+      <input matInput
+       type="text"
+       formControlName="operation"
+       placeholder="Enter Script"
+      >
+       <mat-error *ngIf="form.get('operation').invalid">Please enter a Script operation</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      class="ui primary button"
+    >
+      Save Script
+    </button>
+  </form>
+</mat-card>
