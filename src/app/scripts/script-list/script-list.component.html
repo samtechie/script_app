@@ -2,9 +2,9 @@
 <mat-accordion multi="true" *ngIf="scripts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let script of scripts">
     <mat-expansion-panel-header>
-      {{ script.operation }}
+     Operation: {{ script.operation }}
     </mat-expansion-panel-header>
-    {{ script.result }}
+    Result: {{ script.result }}
     <mat-action-row *ngIf="userIsAuthenticated && userId === script.creator">
       <a mat-button color="primary" [routerLink]="['/edit',script.id]">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(script.id)">DELETE</button>

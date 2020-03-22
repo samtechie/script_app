@@ -1,27 +1,42 @@
 # ScriptApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
+## Tools Used
 
-## Development server
+Angular CLI 9.0.6
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Node 12.16.1
 
-## Code scaffolding
+MongoDB 3.4.4
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Running the App
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+To run the Angular app navigate to the app directory and enter the following commands in your shell
+* `cd script-app`
+* `npm install`
+* `npm start`
 
-## Running unit tests
+You will need to run the backend in a separate shell window or tab in the same app directory.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* `npm install`
+* `npm start:server`
 
-## Running end-to-end tests
+Once the app is running you can register, login and start creating scripts. You must enter one of the following operations.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+* DoThisThing(string)
+* DoThatThing(integer)
+* DoTheOtherThing(float)
 
-## Further help
+Anything else will return an error when you try to save the script.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Once the script is created the app will calculate the result on the backend and store it in the database. When you view scripts you should be able to view the results of the operation
+
+You can edit and delete your script. You can view other people's scripts but you cannot edit or delete them.
+
+## Admin
+
+Work in Progress
+
+
+
+
