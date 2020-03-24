@@ -11,30 +11,29 @@ const BACKEND_URL = environment.apiUrl + "/admin/user/";
 @Injectable({ providedIn: 'root' })
 export class UsersService {
   private users: User[] = [];
-  private usersUpdated = new Subject<{ users: User[], usersCount: number }>();
+  private usersUpdated = new Subject<User[]>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getUsers(usersPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
-    this.http.get<{ message: string, users: any, maxUsers: number }>(BACKEND_URL + queryParams)
-      .pipe(map(userData => {
-        return {
-          users: userData.users.map(user => {
+
+
+  getUsers() {
+    this.http
+      .get<{ message: string; users: any }>(BACKEND_URL)
+      .pipe(
+        map(userData => {
+          return userData.users.map(user => {
             return {
               email: user.email,
               password: user.password,
               id: user._id
             };
-          }), maxUsers: userData.maxUsers
-        };
-      }))
-      .subscribe((modifiedUsersData) => {
-        this.users = modifiedUsersData.users;
-        this.usersUpdated.next({
-          users: [...this.users]
-          , usersCount: modifiedUsersData.maxUsers
-        });
+          });
+        })
+      )
+      .subscribe(transformedUsers => {
+        this.users = transformedUsers;
+        this.usersUpdated.next([...this.users]);
       });
   }
 
@@ -44,14 +43,13 @@ export class UsersService {
 
   getUser(id: string) {
     return this.http.get<{ _id: string, email: string, password: string }>(BACKEND_URL + id);
-    //return {...this.scripts.find(s => s.id === id)};
   }
 
   addUser(email: string, password: string) {
     const user: User = { id: null, email: email, password: password };
-    this.http.post<{ message: string, scriptId: string }>(BACKEND_URL, script)
+    this.http.post<{ message: string, scriptId: string }>(BACKEND_URL, user)
       .subscribe((responseData) => {
-        this.router.navigate(["/admin/users/"]);
+        this.router.navigate(["/admin/user/"]);
       });
 
   }
@@ -60,12 +58,17 @@ export class UsersService {
     const user: User = { id: id, email: email, password: password }
     this.http.put(BACKEND_URL + id, user)
       .subscribe(response => {
-        this.router.navigate(["/admin/users/"]);
+        this.router.navigate(["/admin/user/"]);
       });
   }
 
-  deleteUser(scriptId: string) {
-    return this.http.delete(BACKEND_URL + scriptId)
+  deleteUser(userId: string) {
+    return this.http.delete(BACKEND_URL + userId)
+      .subscribe(() => {
+        const updatedUsers = this.users.filter(user => user.id !== userId);
+        this.users = updatedUsers;
+        this.usersUpdated.next([...this.users]);
+      });
 
   }
 }

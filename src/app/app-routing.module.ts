@@ -15,8 +15,9 @@ const routes: Routes = [
   { path: 'edit/:scriptId', component: ScriptCreateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'admin/user/create',component: UserCreateComponent },
-  { path: 'admin/users/', component: UserListComponent}
+  { path: 'admin/user/create', component: UserCreateComponent, canActivate: [AuthGuard] },
+  { path: 'admin/user/edit/:userId', component: UserCreateComponent, canActivate: [AuthGuard]},
+  { path: 'admin/user', component: UserListComponent, canActivate: [AuthGuard]}
 
 
 ];

@@ -11,6 +11,12 @@
     <li *ngIf="!userIsAuthenticated">
       <a mat-button routerLink="/signup" routerLinkActive="mat-accent">Sign Up</a>
     </li>
+    <li *ngIf="userIsAuthenticated && userRole==='admin'">
+      <a mat-button [routerLink]="['/admin','user', 'create']" routerLinkActive="mat-accent">Create Users</a>
+    </li>
+    <li *ngIf="userIsAuthenticated && userRole==='admin'">
+      <a mat-button [routerLink]="['/admin','user']" routerLinkActive="mat-accent">View Users</a>
+    </li>
     <li *ngIf="userIsAuthenticated">
       <button mat-button (click)="onLogout()">Log Out</button>
     </li>
